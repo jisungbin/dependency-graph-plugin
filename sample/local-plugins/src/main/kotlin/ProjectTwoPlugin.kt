@@ -5,10 +5,9 @@
  * Please see full license: https://github.com/duckie-team/dependency-graph-plugin/blob/main/LICENSE
  */
 
-@file:Suppress("UnstableApiUsage")
+import org.gradle.api.Plugin
+import org.gradle.api.Project
 
-rootProject.name = "DependencyGraphPlugin"
-
-pluginManagement {
-    includeBuild("sample")
+class ProjectTwoPlugin : Plugin<Project> {
+    override fun apply(target: Project) = Unit
 }

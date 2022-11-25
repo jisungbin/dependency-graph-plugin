@@ -5,10 +5,11 @@
  * Please see full license: https://github.com/duckie-team/dependency-graph-plugin/blob/main/LICENSE
  */
 
-@file:Suppress("UnstableApiUsage")
+plugins {
+    java
+    id("project.two")
+}
 
-rootProject.name = "DependencyGraphPlugin"
-
-pluginManagement {
-    includeBuild("sample")
+dependencies {
+    implementation(project(":project-one"))
 }

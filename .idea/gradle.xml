@@ -1,13 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="GradleMigrationSettings" migrationVersion="1" />
   <component name="GradleSettings">
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
+        <compositeConfiguration>
+          <compositeBuild compositeDefinitionSource="SCRIPT">
+            <builds>
+              <build path="$PROJECT_DIR$/sample" name="sample">
+                <projects>
+                  <project path="$PROJECT_DIR$/sample" />
+                  <project path="$PROJECT_DIR$/sample/project-one" />
+                  <project path="$PROJECT_DIR$/sample/project-three" />
+                  <project path="$PROJECT_DIR$/sample/project-two" />
+                </projects>
+              </build>
+              <build path="$PROJECT_DIR$/sample/local-plugins" name="local-plugins">
+                <projects>
+                  <project path="$PROJECT_DIR$/sample/local-plugins" />
+                </projects>
+              </build>
+            </builds>
+          </compositeBuild>
+        </compositeConfiguration>
         <option name="distributionType" value="WRAPPED" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/sample" />
+            <option value="$PROJECT_DIR$/sample/local-plugins" />
+            <option value="$PROJECT_DIR$/sample/project-one" />
+            <option value="$PROJECT_DIR$/sample/project-three" />
+            <option value="$PROJECT_DIR$/sample/project-two" />
           </set>
         </option>
       </GradleProjectSettings>
