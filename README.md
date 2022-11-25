@@ -17,6 +17,10 @@ plugins {
 
 ## Usage
 
+1. Download [graphviz](https://graphviz.org/download/).
+2. Setting `dependencyGraphConfigs`.
+3. Run `./gradlew dependencyGraph`.
+
 ```kotlin
 dependencyGraphConfigs {
     /**
