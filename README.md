@@ -80,6 +80,8 @@ data class DependencyInfo(
 
 #### Example
 
+> You can check sample project at [here](sample).
+
 ```kotlin
 // example 1
 dependencyGraphConfigs {
