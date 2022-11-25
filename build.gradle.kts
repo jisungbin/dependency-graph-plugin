@@ -14,9 +14,6 @@ plugins {
     id("com.vanniktech.maven.publish") version "0.22.0"
 }
 
-group = "land.sungbin.dependency.graph"
-version = "1.0.0"
-
 configure<PublishingExtension> {
     publications.withType<MavenPublication> {
         artifactId = "dependency-graph-plugin"
