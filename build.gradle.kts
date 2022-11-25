@@ -14,16 +14,6 @@ plugins {
     id("com.vanniktech.maven.publish") version "0.22.0"
 }
 
-configure<PublishingExtension> {
-    publications.withType<MavenPublication> {
-        artifactId = "dependency-graph-plugin"
-    }
-}
-
-repositories {
-    mavenCentral()
-}
-
 gradlePlugin {
     plugins {
         create("dependencyGraphPlugin") {
