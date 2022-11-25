@@ -14,7 +14,6 @@ plugins {
 }
 ```
 
-
 ## Usage
 
 1. Download [graphviz](https://graphviz.org/download/).
