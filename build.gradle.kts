@@ -11,6 +11,7 @@ plugins {
     kotlin("jvm") version "1.7.21"
     `kotlin-dsl`
     `maven-publish`
+    id("com.vanniktech.maven.publish") version "0.22.0"
 }
 
 group = "land.sungbin.dependency.graph"

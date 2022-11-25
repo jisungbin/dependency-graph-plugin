@@ -6,5 +6,6 @@
  */
 
 plugins {
+    java
     id("project.one")
 }

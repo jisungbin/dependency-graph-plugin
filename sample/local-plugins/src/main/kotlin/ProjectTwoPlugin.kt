@@ -5,11 +5,9 @@
  * Please see full license: https://github.com/duckie-team/dependency-graph-plugin/blob/main/LICENSE
  */
 
-plugins {
-    java
-    id("project.two")
-}
+import org.gradle.api.Plugin
+import org.gradle.api.Project
 
-dependencies {
-    implementation(project(":project-one"))
+class ProjectTwoPlugin : Plugin<Project> {
+    override fun apply(target: Project) = Unit
 }

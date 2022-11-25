@@ -6,7 +6,11 @@
  */
 
 plugins {
-    id("project.one")
-    id("project.two")
+    java
     id("project.three")
+}
+
+dependencies {
+    implementation(project(":project-one"))
+    implementation(project(":project-two"))
 }

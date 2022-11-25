@@ -15,15 +15,15 @@ gradlePlugin {
     plugins {
         register("projectOne") {
             id = "project.one"
-            implementationClass = "SimplePlugin"
+            implementationClass = "ProjectOnePlugin"
         }
         register("projectTwo") {
             id = "project.two"
-            implementationClass = "SimplePlugin"
+            implementationClass = "ProjectTwoPlugin"
         }
         register("projectThree") {
             id = "project.three"
-            implementationClass = "SimplePlugin"
+            implementationClass = "ProjectThreePlugin"
         }
     }
 }

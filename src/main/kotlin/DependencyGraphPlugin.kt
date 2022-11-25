@@ -6,7 +6,7 @@
  */
 
 import land.sungbin.dependency.graph.DependencyGraphPluginConfigs
-import land.sungbin.dependency.graph.DependencyGraphTask
+import land.sungbin.dependency.graph.DependencyGraphPluginTask
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.create
@@ -19,7 +19,7 @@ class DependencyGraphPlugin : Plugin<Project> {
                 name = "dependencyGraphConfigs",
             )
             afterEvaluate {
-                tasks.register<DependencyGraphTask>(
+                tasks.register<DependencyGraphPluginTask>(
                     name = "dependencyGraph",
                     configs,
                 )

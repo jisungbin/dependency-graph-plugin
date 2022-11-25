@@ -17,12 +17,12 @@ plugins {
 dependencyGraphConfigs {
     projectName = "dependency-graph-sample"
 
-    dependencyInfo { project ->
+    dependencyBuilder { project ->
         with(project.plugins) {
             when {
-                hasPlugin("project.one") -> DependencyInfo("#fcb96a")
+                hasPlugin("project.three") -> DependencyInfo("#81d4fa", isBoxShape = true)
                 hasPlugin("project.two") -> DependencyInfo("#ffc9ba")
-                hasPlugin("project.three") -> DependencyInfo("#81d4fa")
+                hasPlugin("project.one") -> DependencyInfo("#fcb96a")
                 else -> null
             }
         }

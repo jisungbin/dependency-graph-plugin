@@ -15,7 +15,7 @@ import org.gradle.api.Project
 import org.gradle.api.artifacts.ProjectDependency
 import org.gradle.api.tasks.TaskAction
 
-internal abstract class DependencyGraphTask @Inject constructor(
+internal abstract class DependencyGraphPluginTask @Inject constructor(
     private val configs: DependencyGraphPluginConfigs,
 ) : DefaultTask() {
     @TaskAction
@@ -45,17 +45,14 @@ internal abstract class DependencyGraphTask @Inject constructor(
 
         val dependencyProjects = LinkedHashSet<Project>()
         val dependencies = LinkedHashMap<Pair<Project, Project>, MutableList<String>>()
-        val projectMapForDependencyInfos = mutableMapOf<Project, MutableList<DependencyInfo>>()
+        val projectMapForDependencyInfo = mutableMapOf<Project, DependencyInfo>()
 
         while (queue.isNotEmpty()) {
             val project = queue.removeAt(0)
             queue.addAll(project.childProjects.values)
 
-            configs.dependencyInfos?.invoke(project)?.let { dependencyInfos ->
-                projectMapForDependencyInfos.getOrPut(project) { mutableListOf() }.addAll(dependencyInfos)
-            }
-            configs.dependencyInfo?.invoke(project)?.let { dependencyInfo ->
-                projectMapForDependencyInfos.getOrPut(project) { mutableListOf() }.add(dependencyInfo)
+            configs.dependencyInfo.invoke(project)?.let { dependencyInfo ->
+                projectMapForDependencyInfo[project] = dependencyInfo
             }
 
             project.configurations.all {
@@ -92,14 +89,12 @@ internal abstract class DependencyGraphTask @Inject constructor(
         for (project in dependencyProjects) {
             val traits = mutableListOf<String>()
 
-            projectMapForDependencyInfos[project]?.let { dependencyInfos ->
-                for ((color, isBoxShape) in dependencyInfos) {
-                    if (isBoxShape) {
-                        traits.add("shape=box")
-                    }
-                    traits.add("fillcolor=\"$color\"")
+            projectMapForDependencyInfo[project]?.let { dependencyInfo ->
+                val (color, isBoxShape) = dependencyInfo
+                if (isBoxShape) {
+                    traits.add("shape=box")
                 }
-
+                traits.add("fillcolor=\"$color\"")
             } ?: run {
                 configs.defaultDependencyColor?.let { color ->
                     traits.add("fillcolor=\"$color\"")

@@ -8,6 +8,6 @@
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 
-class SimplePlugin : Plugin<Project> {
+class ProjectOnePlugin : Plugin<Project> {
     override fun apply(target: Project) = Unit
 }

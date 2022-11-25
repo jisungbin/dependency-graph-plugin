@@ -5,6 +5,8 @@
  * Please see full license: https://github.com/duckie-team/dependency-graph-plugin/blob/main/LICENSE
  */
 
+@file:Suppress("unused")
+
 package land.sungbin.dependency.graph
 
 import org.gradle.api.Project
@@ -26,8 +28,7 @@ data class DependencyInfo(
  */
 @DependencyGraphPluginDsl
 open class DependencyGraphPluginConfigs {
-    internal var dependencyInfo: ((project: Project) -> DependencyInfo?)? = null
-    internal var dependencyInfos: ((project: Project) -> List<DependencyInfo>?)? = null
+    internal lateinit var dependencyInfo: (project: Project) -> DependencyInfo?
 
     /**
      * The path where the dot file of the graph will be generated.
@@ -68,20 +69,8 @@ open class DependencyGraphPluginConfigs {
      *
      * @return A dependency information object. See [DependencyInfo].
      */
-    fun dependencyInfo(builder: (project: Project) -> DependencyInfo?) {
+    fun dependencyBuilder(builder: (project: Project) -> DependencyInfo?) {
         dependencyInfo = builder
-    }
-
-    /**
-     * Add dependency multiple information to the graph.
-     *
-     * @param builder The lambda that calculates the dependency information.
-     *  - project: Instances of the [project][Project] to compute information
-     *
-     * @return A dependency information list. See [DependencyInfo].
-     */
-    fun dependencyInfos(builder: (project: Project) -> List<DependencyInfo>?) {
-        dependencyInfos = builder
     }
 }
 
