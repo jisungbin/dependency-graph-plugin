@@ -4,7 +4,9 @@ A simple Gradle plugin that shows the dependency graph of the project.
 
 ![preview](sample/generated/dependency-graph/project.dot.png)
 
-### Download ![maven-central](https://img.shields.io/maven-central/v/land.sungbin.dependency.graph/dependency-graph-plugin)
+---
+
+## Download ![maven-central](https://img.shields.io/maven-central/v/land.sungbin.dependency.graph/dependency-graph-plugin)
 
 ```gradle
 plugins {
@@ -12,7 +14,12 @@ plugins {
 }
 ```
 
-### Usage
+
+## Usage
+
+1. Download [graphviz](https://graphviz.org/download/).
+2. Setting `dependencyGraphConfigs`.
+3. Run `./gradlew dependencyGraph`.
 
 ```kotlin
 dependencyGraphConfigs {
@@ -73,6 +80,8 @@ data class DependencyInfo(
 
 #### Example
 
+> You can check sample project at [here](sample).
+
 ```kotlin
 // example 1
 dependencyGraphConfigs {
@@ -107,10 +116,10 @@ dependencyGraphConfigs {
 }
 ```
 
-### Credit
+## Credit
 
 The original implementation is by [JakeWharton](https://github.com/JakeWharton/SdkSearch/blob/master/gradle/projectDependencyGraph.gradle).
 
-### License
+## License
 
 This project is licensed under the MIT License. Please refer to the [LICENSE file](LICENSE) for details.
