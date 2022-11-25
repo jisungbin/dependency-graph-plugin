@@ -5,10 +5,7 @@
  * Please see full license: https://github.com/duckie-team/dependency-graph-plugin/blob/main/LICENSE
  */
 
-@file:Suppress("UnstableApiUsage")
+package land.sungbin.dependency.graph
 
-rootProject.name = "DependencyGraphPlugin"
-
-pluginManagement {
-    includeBuild("sample")
-}
+@DslMarker
+internal annotation class DependencyGraphPluginDsl

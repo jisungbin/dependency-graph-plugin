@@ -5,32 +5,26 @@
  * Please see full license: https://github.com/duckie-team/dependency-graph-plugin/blob/main/LICENSE
  */
 
+import land.sungbin.dependency.graph.DependencyInfo
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     kotlin("jvm") version "1.7.21"
     `kotlin-dsl`
-    `maven-publish`
+    id("land.sungbin.dependency.graph.plugin") version "1.0.0"
 }
 
-group = "land.sungbin.dependency.graph"
-version = "1.0.0"
+dependencyGraphConfigs {
+    projectName = "dependency-graph-sample"
 
-configure<PublishingExtension> {
-    publications.withType<MavenPublication> {
-        artifactId = "dependency-graph-plugin"
-    }
-}
-
-repositories {
-    mavenCentral()
-}
-
-gradlePlugin {
-    plugins {
-        create("dependencyGraphPlugin") {
-            id = "land.sungbin.dependency.graph.plugin"
-            implementationClass = "DependencyGraphPlugin"
+    dependencyInfo { project ->
+        with(project.plugins) {
+            when {
+                hasPlugin("project.one") -> DependencyInfo("#fcb96a")
+                hasPlugin("project.two") -> DependencyInfo("#ffc9ba")
+                hasPlugin("project.three") -> DependencyInfo("#81d4fa")
+                else -> null
+            }
         }
     }
 }
