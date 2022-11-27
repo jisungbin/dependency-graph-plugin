@@ -98,6 +98,8 @@ dependencyGraphConfigs {
 
 // example 2
 dependencyGraphConfigs {
+    dotFilePath = "assets/dependency-graph/project.dot"
+    
     dependencyBuilder { project ->
         with(project) {
             when {
