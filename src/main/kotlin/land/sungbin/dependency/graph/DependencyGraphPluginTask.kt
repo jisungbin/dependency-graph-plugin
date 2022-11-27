@@ -89,8 +89,7 @@ internal abstract class DependencyGraphPluginTask @Inject constructor(
         for (project in dependencyProjects) {
             val traits = mutableListOf<String>()
 
-            projectMapForDependencyInfo[project]?.let { dependencyInfo ->
-                val (color, isBoxShape) = dependencyInfo
+            projectMapForDependencyInfo[project]?.let { (color, isBoxShape) ->
                 if (isBoxShape) {
                     traits.add("shape=box")
                 }
