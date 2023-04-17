@@ -84,7 +84,7 @@ data class DependencyInfo(
 )
 ```
 
-#### Example (Also, you can see [sample](https://github.com/jisungbin/dependency-graph-plugin/tree/main/sample) module)
+#### Example
 
 > You can check sample project at [here](sample).
 
