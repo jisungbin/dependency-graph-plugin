@@ -5,9 +5,5 @@
  * Please see full license: https://github.com/jisungbin/dependency-graph-plugin/blob/main/LICENSE
  */
 
-import org.gradle.api.Plugin
-import org.gradle.api.Project
-
-class ProjectThreePlugin : Plugin<Project> {
-    override fun apply(target: Project) = Unit
-}
+@DslMarker
+internal annotation class DependencyGraphPluginDsl
