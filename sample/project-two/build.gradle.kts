@@ -1,8 +1,8 @@
 /*
- * Developed by Ji Sungbin, 2022
+ * Developed by Ji Sungbin, 2023
  *
  * Licensed under the MIT.
- * Please see full license: https://github.com/duckie-team/dependency-graph-plugin/blob/main/LICENSE
+ * Please see full license: https://github.com/jisungbin/dependency-graph-plugin/blob/main/LICENSE
  */
 
 plugins {

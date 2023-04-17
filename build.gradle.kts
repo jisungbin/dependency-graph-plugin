@@ -1,17 +1,17 @@
 /*
- * Developed by Ji Sungbin, 2022
+ * Developed by Ji Sungbin, 2023
  *
  * Licensed under the MIT.
- * Please see full license: https://github.com/duckie-team/dependency-graph-plugin/blob/main/LICENSE
+ * Please see full license: https://github.com/jisungbin/dependency-graph-plugin/blob/main/LICENSE
  */
 
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.7.21"
+    kotlin("jvm") version "1.8.20"
     `kotlin-dsl`
     `maven-publish`
-    id("com.vanniktech.maven.publish") version "0.22.0"
+    id("com.vanniktech.maven.publish") version "0.25.1"
 }
 
 gradlePlugin {
@@ -21,6 +21,11 @@ gradlePlugin {
             implementationClass = "DependencyGraphPlugin"
         }
     }
+}
+
+repositories {
+    mavenCentral()
+    gradlePluginPortal()
 }
 
 tasks.withType<KotlinCompile> {

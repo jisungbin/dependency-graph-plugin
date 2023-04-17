@@ -1,21 +1,21 @@
 /*
- * Developed by Ji Sungbin, 2022
+ * Developed by Ji Sungbin, 2023
  *
  * Licensed under the MIT.
- * Please see full license: https://github.com/duckie-team/dependency-graph-plugin/blob/main/LICENSE
+ * Please see full license: https://github.com/jisungbin/dependency-graph-plugin/blob/main/LICENSE
  */
 
-import land.sungbin.dependency.graph.DependencyInfo
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.7.21"
+    kotlin("jvm") version "1.8.20"
     `kotlin-dsl`
-    id("land.sungbin.dependency.graph.plugin") version "1.0.0"
+    id("land.sungbin.dependency.graph.plugin") version "1.1.0"
 }
 
-dependencyGraphConfigs {
+dependencyGraphConfig {
     projectName = "dependency-graph-sample"
+    outputFormat = OutputFormat.SVG
 
     dependencyBuilder { project ->
         with(project.plugins) {
@@ -27,6 +27,11 @@ dependencyGraphConfigs {
             }
         }
     }
+}
+
+repositories {
+    mavenCentral()
+    gradlePluginPortal()
 }
 
 tasks.withType<KotlinCompile> {

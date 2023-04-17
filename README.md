@@ -17,11 +17,11 @@ plugins {
 ## Usage
 
 1. Download [graphviz](https://graphviz.org/download/).
-2. Setting `dependencyGraphConfigs`.
+2. Setting `dependencyGraphConfig`.
 3. Run `./gradlew dependencyGraph`.
 
 ```kotlin
-dependencyGraphConfigs {
+dependencyGraphConfig {
     /**
      * The path where the dot file of the graph will be generated.
      * The png of the graph is generated along this path, too.
@@ -54,10 +54,17 @@ dependencyGraphConfigs {
     defaultDependencyColor = "#eeeeee" // String? type
 
     /**
+     * The format in which the graph image will be generated.
+     *
+     * Default is [OutputFormat.PNG].
+     */
+    outputFormat = OutputFormat.PNG // OutputFormat Type. Available: PNG, SVG, SVGZ
+
+    /**
      * **[REQUIRE]** Add dependency information to the graph.
      *
      * @param builder The lambda that calculates the dependency information.
-     *  - project: Instances of the [project][Project] to compute information
+     *  - project: Instances of the Project to compute information
      *
      * @return A dependency information object. See [DependencyInfo].
      */
@@ -77,7 +84,7 @@ data class DependencyInfo(
 )
 ```
 
-#### Example (Also, you can see [sample](https://github.com/duckie-team/dependency-graph-plugin/tree/main/sample) module)
+#### Example (Also, you can see [sample](https://github.com/jisungbin/dependency-graph-plugin/tree/main/sample) module)
 
 > You can check sample project at [here](sample).
 

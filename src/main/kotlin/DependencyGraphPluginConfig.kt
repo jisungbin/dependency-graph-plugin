@@ -1,15 +1,29 @@
 /*
- * Developed by Ji Sungbin, 2022
+ * Developed by Ji Sungbin, 2023
  *
  * Licensed under the MIT.
- * Please see full license: https://github.com/duckie-team/dependency-graph-plugin/blob/main/LICENSE
+ * Please see full license: https://github.com/jisungbin/dependency-graph-plugin/blob/main/LICENSE
  */
 
 @file:Suppress("unused")
 
-package land.sungbin.dependency.graph
-
+import OutputFormat.PNG
+import OutputFormat.SVG
+import OutputFormat.SVGZ
 import org.gradle.api.Project
+
+/**
+ * Graph image file generation formats.
+ *
+ * @property PNG Classic PNG (default)
+ * @property SVG Classic SVG
+ * @property SVGZ Compressed SVGs
+ */
+enum class OutputFormat(internal val raw: String) {
+    PNG("png"),
+    SVG("svg"),
+    SVGZ("svgz"),
+}
 
 /**
  * A dependency information object.
@@ -21,13 +35,19 @@ import org.gradle.api.Project
 data class DependencyInfo(
     val color: String,
     val isBoxShape: Boolean = false,
-)
+) {
+    init {
+        require(color.startsWith("#")) {
+            "Hex colors must start with `#`"
+        }
+    }
+}
 
 /**
  * Calculate the policy to generate the graph.
  */
 @DependencyGraphPluginDsl
-open class DependencyGraphPluginConfigs {
+open class DependencyGraphPluginConfig {
     internal lateinit var dependencyInfo: (project: Project) -> DependencyInfo?
 
     /**
@@ -60,6 +80,13 @@ open class DependencyGraphPluginConfigs {
      * Defaults to `#eeeeee`, skipped graphing if `null` is provided.
      */
     open var defaultDependencyColor: String? = "#eeeeee"
+
+    /**
+     * The format in which the graph image will be generated.
+     *
+     * Default is [OutputFormat.PNG].
+     */
+    open var outputFormat: OutputFormat = PNG
 
     /**
      * Add dependency information to the graph.

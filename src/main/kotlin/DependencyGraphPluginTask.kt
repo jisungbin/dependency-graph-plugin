@@ -1,14 +1,11 @@
 /*
- * Developed by Ji Sungbin, 2022
+ * Developed by Ji Sungbin, 2023
  *
  * Licensed under the MIT.
- * Please see full license: https://github.com/duckie-team/dependency-graph-plugin/blob/main/LICENSE
+ * Please see full license: https://github.com/jisungbin/dependency-graph-plugin/blob/main/LICENSE
  */
 
-package land.sungbin.dependency.graph
-
 import java.io.File
-import java.util.Locale
 import javax.inject.Inject
 import org.gradle.api.DefaultTask
 import org.gradle.api.Project
@@ -16,22 +13,23 @@ import org.gradle.api.artifacts.ProjectDependency
 import org.gradle.api.tasks.TaskAction
 
 internal abstract class DependencyGraphPluginTask @Inject constructor(
-    private val configs: DependencyGraphPluginConfigs,
+    private val config: DependencyGraphPluginConfig,
 ) : DefaultTask() {
     @TaskAction
     fun run() {
-        val dot = File(project.rootProject.rootDir, configs.dotFilePath)
-        dot.parentFile.deleteRecursively()
-        dot.parentFile.mkdirs()
+        val dot = File(project.rootProject.rootDir, config.dotFilePath).also { file ->
+            if (file.parentFile?.exists() == false) file.parentFile!!.mkdirs()
+            if (file.exists()) file.delete()
+        }
 
         dot.appendText(
-            """
+            text = """
              |digraph {
-             |  graph [label="${configs.projectName ?: project.rootProject.name}\n ",labelloc=t,fontsize=30,ranksep=1.4];
+             |  graph [label="${config.projectName ?: project.rootProject.name}\n ",labelloc=t,fontsize=30,ranksep=1.4];
              |  node [style=filled, fillcolor="#bbbbbb"];
              |  rankdir=TB;
              |
-            """.trimMargin()
+            """.trimMargin(),
         )
 
         val rootProjects = mutableListOf<Project>()
@@ -51,14 +49,13 @@ internal abstract class DependencyGraphPluginTask @Inject constructor(
             val project = queue.removeAt(0)
             queue.addAll(project.childProjects.values)
 
-            configs.dependencyInfo.invoke(project)?.let { dependencyInfo ->
+            config.dependencyInfo.invoke(project)?.let { dependencyInfo ->
                 projectMapForDependencyInfo[project] = dependencyInfo
             }
 
             project.configurations.all {
-                if (name.toLowerCase(Locale.getDefault()).contains("test")) {
-                    return@all
-                }
+                if (name.lowercase().contains("test")) return@all
+
                 getDependencies()
                     .withType(ProjectDependency::class.java)
                     .map(ProjectDependency::getDependencyProject)
@@ -72,7 +69,7 @@ internal abstract class DependencyGraphPluginTask @Inject constructor(
                             mutableListOf()
                         }
 
-                        if (name.toLowerCase(Locale.getDefault()).endsWith("implementation")) {
+                        if (name.lowercase().endsWith("implementation")) {
                             traits.add("style=dotted")
                         }
                     }
@@ -90,14 +87,10 @@ internal abstract class DependencyGraphPluginTask @Inject constructor(
             val traits = mutableListOf<String>()
 
             projectMapForDependencyInfo[project]?.let { (color, isBoxShape) ->
-                if (isBoxShape) {
-                    traits.add("shape=box")
-                }
+                if (isBoxShape) traits.add("shape=box")
                 traits.add("fillcolor=\"$color\"")
-            } ?: run {
-                configs.defaultDependencyColor?.let { color ->
-                    traits.add("fillcolor=\"$color\"")
-                }
+            } ?: config.defaultDependencyColor?.let { color ->
+                traits.add("fillcolor=\"$color\"")
             }
 
             dot.appendText("  \"${project.path}\" [${traits.joinToString(", ")}];\n")
@@ -127,15 +120,13 @@ internal abstract class DependencyGraphPluginTask @Inject constructor(
         project.rootProject.exec {
             commandLine = listOf(
                 "dot",
-                "-Tpng",
+                "-T${config.outputFormat.raw}",
                 "-O",
                 dot.path,
             )
         }
 
-        if (configs.autoDeleteDotFile) {
-            dot.delete()
-        }
+        if (config.autoDeleteDotFile) dot.delete()
         println("Project module dependency graph created at ${dot.absolutePath}.png")
     }
 }
