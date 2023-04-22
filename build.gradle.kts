@@ -11,7 +11,7 @@ plugins {
     kotlin("jvm") version "1.8.20"
     `kotlin-dsl`
     `maven-publish`
-    id("com.vanniktech.maven.publish") version "0.25.1"
+    id("com.vanniktech.maven.publish") version "0.25.2"
 }
 
 gradlePlugin {
