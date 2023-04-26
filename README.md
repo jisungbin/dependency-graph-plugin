@@ -8,7 +8,7 @@ A simple Gradle plugin that shows the dependency graph of the project.
 
 ## Download ![maven-central](https://img.shields.io/maven-central/v/land.sungbin.dependency.graph/dependency-graph-plugin)
 
-- use `1.1.0` version!
+**use `1.1.0` version!**
 
 ```gradle
 plugins {
