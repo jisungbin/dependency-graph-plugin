@@ -5,19 +5,30 @@
  * Please see full license: https://github.com/jisungbin/dependency-graph-plugin/blob/main/LICENSE
  */
 
-import java.io.File
-import javax.inject.Inject
 import org.gradle.api.DefaultTask
 import org.gradle.api.Project
 import org.gradle.api.artifacts.ProjectDependency
+import org.gradle.api.file.DirectoryProperty
+import org.gradle.api.tasks.CacheableTask
+import org.gradle.api.tasks.InputDirectory
+import org.gradle.api.tasks.OutputDirectory
 import org.gradle.api.tasks.TaskAction
 
-internal abstract class DependencyGraphPluginTask @Inject constructor(
-    private val config: DependencyGraphPluginConfig,
-) : DefaultTask() {
+private const val SKIP = "#skip"
+
+@CacheableTask
+internal abstract class DependencyGraphPluginTask : DefaultTask() {
+    abstract var config: DependencyGraphPluginConfig
+
+    @get:InputDirectory
+    abstract val source: DirectoryProperty
+
+    @get:OutputDirectory
+    abstract val destination: DirectoryProperty
+
     @TaskAction
     fun run() {
-        val dot = File(project.rootProject.rootDir, config.dotFilePath).also { file ->
+        val dot = destination.asFile.get().also { file ->
             if (file.parentFile?.exists() == false) file.parentFile!!.mkdirs()
             if (file.exists()) file.delete()
         }
@@ -49,8 +60,12 @@ internal abstract class DependencyGraphPluginTask @Inject constructor(
             val project = queue.removeAt(0)
             queue.addAll(project.childProjects.values)
 
-            config.dependencyInfo.invoke(project)?.let { dependencyInfo ->
-                projectMapForDependencyInfo[project] = dependencyInfo
+            (config.dependencyInfo.invoke(project) ?: DependencyInfo(
+                color = config.defaultDependencyColor ?: SKIP,
+            )).let { dependencyInfo ->
+                if (dependencyInfo.color != SKIP) {
+                    projectMapForDependencyInfo[project] = dependencyInfo
+                }
             }
 
             project.configurations.all {
