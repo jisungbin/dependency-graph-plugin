@@ -7,6 +7,7 @@
 
 @file:Suppress("unused")
 
+import java.io.File
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.create
@@ -15,14 +16,13 @@ import org.gradle.kotlin.dsl.register
 class DependencyGraphPlugin : Plugin<Project> {
     override fun apply(project: Project) {
         with(project) {
-            val configs = project.extensions.create<DependencyGraphPluginConfig>(
-                name = "dependencyGraphConfig",
-            )
+            val config = extensions.create<DependencyGraphPluginConfig>("dependencyGraphConfig")
             afterEvaluate {
-                tasks.register<DependencyGraphPluginTask>(
-                    name = "dependencyGraph",
-                    configs,
-                )
+                tasks.register<DependencyGraphPluginTask>("dependencyGraph") {
+                    this.config = config
+                    source.set(buildDir)
+                    destination.set(File(rootProject.rootDir, config.dotFilePath))
+                }
             }
         }
     }

@@ -58,7 +58,7 @@ dependencyGraphConfig {
      *
      * Default is [OutputFormat.PNG].
      */
-    outputFormat = OutputFormat.PNG // OutputFormat Type. Available: PNG, SVG, SVGZ
+    outputFormat = OutputFormat.PNG // OutputFormat Type. Available: PNG, SVG, JPG
 
     /**
      * **[REQUIRE]** Add dependency information to the graph.

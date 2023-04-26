@@ -36,3 +36,17 @@ tasks.withType<JavaCompile> {
     sourceCompatibility = JavaVersion.VERSION_11.toString()
     targetCompatibility = JavaVersion.VERSION_11.toString()
 }
+
+tasks.withType<Test>().configureEach {
+    useJUnitPlatform()
+}
+
+sourceSets {
+    getByName("main").java.srcDir("src/main/kotlin")
+    getByName("test").java.srcDir("src/test/kotlin")
+}
+
+dependencies {
+    testImplementation("io.kotest:kotest-runner-junit5:5.6.1")
+    testImplementation(gradleTestKit())
+}

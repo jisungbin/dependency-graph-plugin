@@ -9,20 +9,15 @@
 
 import OutputFormat.PNG
 import OutputFormat.SVG
-import OutputFormat.SVGZ
 import org.gradle.api.Project
 
 /**
  * Graph image file generation formats.
- *
- * @property PNG Classic PNG (default)
- * @property SVG Classic SVG
- * @property SVGZ Compressed SVGs
  */
 enum class OutputFormat(internal val raw: String) {
     PNG("png"),
     SVG("svg"),
-    SVGZ("svgz"),
+    JPG("jpg"),
 }
 
 /**
@@ -48,7 +43,7 @@ data class DependencyInfo(
  */
 @DependencyGraphPluginDsl
 open class DependencyGraphPluginConfig {
-    internal lateinit var dependencyInfo: (project: Project) -> DependencyInfo?
+    internal var dependencyInfo: (project: Project) -> DependencyInfo? = { null }
 
     /**
      * The path where the dot file of the graph will be generated.
