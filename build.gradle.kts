@@ -8,7 +8,7 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.8.21"
+    kotlin("jvm") version "1.9.10"
     `kotlin-dsl`
     `maven-publish`
     id("com.vanniktech.maven.publish") version "0.25.2"

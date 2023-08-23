@@ -8,7 +8,7 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.8.21"
+    kotlin("jvm") version "1.9.10"
     `kotlin-dsl`
     id("land.sungbin.dependency.graph.plugin") version "1.1.0"
 }
